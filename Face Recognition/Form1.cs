@@ -136,10 +136,10 @@ namespace Face_Recognition
 
 
             MailMessage message = new MailMessage();
-            message.To.Add("ynsemrektk@gmail.com");
+            message.To.Add(cfg.MailAddressTo);
             message.From = new MailAddress("ynsemrektk@hotmail.com");
-            message.Subject = "Test";
-            message.Body = "Deneme";
+            message.Subject = "Face Detection";
+            message.Body = "Detection saved succesfully in atttachments.";
             System.Net.Mail.Attachment att;
             System.Net.Mail.Attachment att2;
             att2 = new Attachment(cfg.LogSavePath + @"\log.json");
