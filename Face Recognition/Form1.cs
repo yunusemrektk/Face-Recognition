@@ -18,23 +18,24 @@ using AForge.Video;
 using OpenTK.Graphics.ES11;
 using Newtonsoft.Json;
 using AForge.Video.DirectShow;
+using Emgu.CV.Cuda;
 
 namespace Face_Recognition
 {
     public partial class Form1 : Form
     {
+        Config cfg = new Config();
+        
         #region Variables
         private Capture videoCapture = null;
         private Image<Bgr, Byte> currentFrame = null;
         private bool isOnce = false;
         private bool faceDetectionEnabled = false;
         Mat frame = new Mat();
-        CascadeClassifier faceCascadeClassifier = new CascadeClassifier("haarcascade_frontalface_alt.xml");
+        CascadeClassifier faceCascadeClassifier;
         Image<Bgr, Byte> resultImage = null;
         private bool captureOn;
         int Count = 0;
-        string path = @"C:\Users\YUNUS EMRE\source\repos\Face Recognition\Face Recognition\Images";
-        string logpath = @"C:\Users\YUNUS EMRE\source\repos\Face Recognition\Face Recognition\bin\Debug";
         string Image_Name = null;
         int IDCount = 0;
         #endregion
@@ -44,7 +45,7 @@ namespace Face_Recognition
             InitializeComponent();
             Control.CheckForIllegalCrossThreadCalls = false;
             isOnce = true;
-
+            faceCascadeClassifier = new CascadeClassifier(cfg.HaarCascadePath);
         }
 
 
@@ -95,7 +96,7 @@ namespace Face_Recognition
                                 if (isOnce == true)
                                 {
 
-                                    Image_Name = path + @"\" + "Person" + DateTime.Now.ToString("dd-mm-yyyy-hh-mm-ss") + ".jpg";
+                                    Image_Name = cfg.PhotoSavepPath + @"\" + "Person" + DateTime.Now.ToString("dd-mm-yyyy-hh-mm-ss") + ".jpg";
                                     resultImage.Save(Image_Name);
                                     // Non-Stop Mailing.
                                     Thread th = new Thread(Send_Email);
@@ -141,7 +142,7 @@ namespace Face_Recognition
             message.Body = "Deneme";
             System.Net.Mail.Attachment att;
             System.Net.Mail.Attachment att2;
-            att2 = new Attachment(logpath + @"\log.json");
+            att2 = new Attachment(cfg.LogSavePath + @"\log.json");
             att = new Attachment(Image_Name);
             message.Attachments.Add(att);
             message.Attachments.Add(att2);
@@ -206,7 +207,7 @@ namespace Face_Recognition
                                 if (isOnce == true)
                                 {
 
-                                    Image_Name = path + @"\" + "Person" + DateTime.Now.ToString("dd-mm-yyyy-hh-mm-ss") + ".jpg";
+                                    Image_Name = cfg.PhotoSavepPath + @"\" + "Person" + DateTime.Now.ToString("dd-mm-yyyy-hh-mm-ss") + ".jpg";
                                     resultImage.Save(Image_Name);
                                     // Non-Stop Mailing.
                                     Thread th = new Thread(Send_Email);
@@ -269,7 +270,7 @@ namespace Face_Recognition
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            textBox1.Text= "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
+            textBox1.Text=cfg.RtspUrl;
         }
     }
 }
