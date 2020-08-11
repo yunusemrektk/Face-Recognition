@@ -71,7 +71,7 @@ namespace Face_Recognition
                     //Enhance the image 
                     CvInvoke.EqualizeHist(grayImage, grayImage);
 
-                    Rectangle[] faces = faceCascadeClassifier.DetectMultiScale(grayImage, 1.1, 6, Size.Empty, Size.Empty);
+                    Rectangle[] faces = faceCascadeClassifier.DetectMultiScale(grayImage, 1.1, 1, Size.Empty, Size.Empty);
 
 
 
@@ -185,7 +185,7 @@ namespace Face_Recognition
                     //Enhance the image 
                     CvInvoke.EqualizeHist(grayImage, grayImage);
 
-                    Rectangle[] faces = faceCascadeClassifier.DetectMultiScale(grayImage, 1.1, 1, Size.Empty, Size.Empty);
+                    Rectangle[] faces = faceCascadeClassifier.DetectMultiScale(grayImage, 1.1, 6, Size.Empty, Size.Empty);
 
                    if (faces.Length > 0)
                     {
